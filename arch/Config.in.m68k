@@ -28,6 +28,11 @@ config BR2_m68k_68040
 	select BR2_m68k_m68k
 	select BR2_USE_MMU
 
+config BR2_m68k_68000
+	bool "68000"
+    select BR2_SOFT_FLOAT
+	depends on BR2_m68k
+
 config BR2_m68k_cf5208
 	bool "5208"
 	select BR2_m68k_cf
@@ -37,6 +42,7 @@ endchoice
 
 config BR2_GCC_TARGET_CPU
 	default "68040"		if BR2_m68k_68040
+	default "68000"     if BR2_m68k_68000
 	default "5208"		if BR2_m68k_cf5208
 
 config BR2_READELF_ARCH_NAME
