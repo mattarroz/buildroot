@@ -1,0 +1,36 @@
+From 15d6e190b9a6970402e53617a2118b444fadc71f Mon Sep 17 00:00:00 2001
+From: Matthias Reis <matthias.reis@biologie.hu-berlin.de>
+Date: Sun, 15 Oct 2023 17:15:02 +0200
+Subject: [PATCH] Fix invalid 68000 instructions
+
+---
+ libc/sysdeps/linux/m68k/clone.S | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/libc/sysdeps/linux/m68k/clone.S b/libc/sysdeps/linux/m68k/clone.S
+index 24071235b..c493c4cf7 100644
+--- a/libc/sysdeps/linux/m68k/clone.S
++++ b/libc/sysdeps/linux/m68k/clone.S
+@@ -35,12 +35,14 @@
+ 
+ __clone:
+ 	/* Sanity check arguments.  */
+-	movel	#-EINVAL, %d0
+-	movel	4(%sp), %a0		/* no NULL function pointers */
+-	tstl	%a0
++	movel   #-EINVAL, %d0
++	movel   4(%sp), %d1             /* no NULL function pointers */
++	movel	%d1, %a0
++	tstl    %d1
+ 	beq.w	__syscall_error_trampoline
+-	movel	8(%sp), %a1		/* no NULL stack pointers */
+-	tstl	%a1
++	movel   8(%sp), %d1             /* no NULL stack pointers */
++	movel	%d1, %a1
++	tstl    %d1
+ 	beq.w   __syscall_error_trampoline
+ 
+ 	/* Allocate space and copy the argument onto the new stack.  */
+-- 
+2.39.2
+
