@@ -1,0 +1,29 @@
+From a332408438a88a3df8552ae013aef51328c58411 Mon Sep 17 00:00:00 2001
+From: Matthias Reis <matthias.reis@biologie.hu-berlin.de>
+Date: Sun, 15 Oct 2023 22:57:15 +0200
+Subject: [PATCH] Fix alignment issue on 68000 (see
+ https://gcc.gnu.org/bugzilla/show_bug.cgi\?id\=53386)
+
+---
+ gcc/config/m68k/linux.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/gcc/config/m68k/linux.h b/gcc/config/m68k/linux.h
+index 05661bf355a..aaafa70915f 100644
+--- a/gcc/config/m68k/linux.h
++++ b/gcc/config/m68k/linux.h
+@@ -28,9 +28,9 @@ along with GCC; see the file COPYING3.  If not see
+ /* for 68k machines this only needs to be TRUE for the 68000 */
+ 
+ #undef STRICT_ALIGNMENT
+-#define STRICT_ALIGNMENT 0
++#define STRICT_ALIGNMENT 1
+ #undef M68K_HONOR_TARGET_STRICT_ALIGNMENT
+-#define M68K_HONOR_TARGET_STRICT_ALIGNMENT 0
++#define M68K_HONOR_TARGET_STRICT_ALIGNMENT 1
+ 
+ /* Here are four prefixes that are used by asm_fprintf to
+    facilitate customization for alternate assembler syntaxes.
+-- 
+2.39.2
+
