@@ -1,0 +1,33 @@
+From 3b996f6edcdadcd26a28444adac66174e818e351 Mon Sep 17 00:00:00 2001
+From: Matthias Reis <matthias.reis@biologie.hu-berlin.de>
+Date: Sun, 15 Oct 2023 19:39:17 +0200
+Subject: [PATCH] Remove -Oz flag, causing ICE with gcc 12
+
+---
+ Makefile.flags | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.flags b/Makefile.flags
+index 1cec5ba20..29b403d79 100644
+--- a/Makefile.flags
++++ b/Makefile.flags
+@@ -87,14 +87,14 @@ endif
+ #CFLAGS += $(call cc-option,-Wconversion,)
+ 
+ ifneq ($(CONFIG_DEBUG),y)
+-CFLAGS += $(call cc-option,-Oz,$(call cc-option,-Os,$(call cc-option,-O2,)))
++CFLAGS += $(call cc-option,-O2,)
+ else
+ CFLAGS += $(call cc-option,-g,)
+ #CFLAGS += "-D_FORTIFY_SOURCE=2"
+ ifeq ($(CONFIG_DEBUG_PESSIMIZE),y)
+ CFLAGS += $(call cc-option,-O0,)
+ else
+-CFLAGS += $(call cc-option,-Oz,$(call cc-option,-Os,$(call cc-option,-O2,)))
++CFLAGS += $(call cc-option,-O2,)
+ endif
+ endif
+ ifeq ($(CONFIG_DEBUG_SANITIZE),y)
+-- 
+2.39.2
+
