@@ -1,0 +1,26 @@
+From f423c4cab7d00090a6232523d499c83f30053739 Mon Sep 17 00:00:00 2001
+From: Matthias Reis <20595601+mattarroz@users.noreply.github.com>
+Date: Sat, 6 Jul 2024 17:23:08 +0200
+Subject: [PATCH] Hard code CFLAG flag for ls command to avoi -Oz, cuase ICE
+ with gcc 12
+
+---
+ coreutils/Kbuild.src | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/coreutils/Kbuild.src b/coreutils/Kbuild.src
+index a805b64fe..9fcee1999 100644
+--- a/coreutils/Kbuild.src
++++ b/coreutils/Kbuild.src
+@@ -4,6 +4,8 @@
+ #
+ # Licensed under GPLv2, see file LICENSE in this source tree.
+ 
++CFLAGS_ls.o := -O2
++
+ libs-y			+= libcoreutils/
+ 
+ lib-y:=
+-- 
+2.39.2
+
